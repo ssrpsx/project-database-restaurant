@@ -90,7 +90,7 @@ const FoodGrid: React.FC = () => {
       {foodByCategory.map((cat, idx) => (
         <div
           key={idx}
-          ref={(el) => (categoryRefs.current[idx] = el)}
+          ref={(el) => void (categoryRefs.current[idx] = el)}
           className="mb-8"
         >
           <h2 className="text-2xl text-gray-800 font-bold mb-4 ml-6 sm:ml-0">{cat.category}</h2>
