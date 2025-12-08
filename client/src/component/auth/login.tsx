@@ -3,18 +3,48 @@ import React, { useState } from 'react';
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert(`Username: ${username}\nPassword: ${password}`);
-        // TODO: ต่อ API login จริง
+        setLoading(true);
+
+        try {
+            const res = await fetch("http://localhost:3000/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.message || `Login failed with status: ${res.status}`);
+                return;
+            }
+
+            localStorage.setItem("token", data.token);
+            alert("Login Success!");
+
+        }
+        catch (err) {
+            console.error("Fetch/JSON Error:", err);
+            alert("Server error: Cannot connect to server or response is invalid.");
+        }
+        finally {
+            setLoading(false);
+        }
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4">
             <div className="bg-[#181818] rounded-lg p-8 w-full max-w-md shadow-xs">
                 <h1 className="text-3xl font-bold mb-6 text-white text-center">Login</h1>
+
                 <form onSubmit={handleLogin} className="flex flex-col gap-4">
+                    {/* Username */}
                     <div className="flex flex-col">
                         <label className="mb-2 font-semibold text-gray-300" htmlFor="username">Username</label>
                         <input
@@ -28,6 +58,7 @@ const Login: React.FC = () => {
                         />
                     </div>
 
+                    {/* Password */}
                     <div className="flex flex-col">
                         <label className="mb-2 font-semibold text-gray-300" htmlFor="password">Password</label>
                         <input
@@ -41,14 +72,17 @@ const Login: React.FC = () => {
                         />
                     </div>
 
+                    {/* Submit button */}
                     <button
                         type="submit"
-                        className="bg-red-600 text-white py-2 rounded hover:bg-red-500 transition-colors mt-2"
+                        disabled={loading}
+                        className="bg-red-600 text-white py-2 rounded hover:bg-red-500 transition-colors mt-2 disabled:bg-gray-600"
                     >
-                        Login
+                        {loading ? "Loading..." : "Login"}
                     </button>
+
                     <div className='w-full'>
-                        <a href="/" className='float-right text-gray-300'>Don't any account</a>
+                        <a href="/" className='float-right text-gray-300'>Don't have any account?</a>
                     </div>
                 </form>
             </div>

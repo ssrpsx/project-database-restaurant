@@ -1,14 +1,13 @@
 import type { Request, Response } from "express";
-import { db } from "../database/database.js";
+import { db } from "../server";
 import type { RowDataPacket } from "mysql2";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-// กำหนด type ของ user row
 interface UserRow extends RowDataPacket {
     id: number;
-    username: string;
-    password: string;
+    USERNAME: string;
+    PASSWORD: string;
 }
 
 export const login = async (req: Request, res: Response) => {
@@ -18,19 +17,23 @@ export const login = async (req: Request, res: Response) => {
         const usernameNormalized = username.trim().toLowerCase();
 
         const [rows] = await db.query<UserRow[]>(
-            "SELECT * FROM users WHERE username = ?",
+            "SELECT * FROM user WHERE username = ?",
             [usernameNormalized]
         );
 
         const user = rows[0];
 
         if (!user) {
-            return res.status(400).send("User not found!!!");
+            return res.status(400).json({ message: "User not found or Invalid credentials." });
         }
+        
+        const isMatch = await bcrypt.compare(password, user.PASSWORD);
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).send("Password Invalid!!!");
-
+        if (!isMatch) 
+        {
+            return res.status(400).json({ message: "Invalid username or password." });
+        }
+        
         const payload = {
             user: {
                 id: user.id,

@@ -2,25 +2,37 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { db } from './database/database.js';
+import mysql from 'mysql2/promise';
+import authRoutes from './routes/auth.js';
 
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json({ limit: "10mb" }));
 
+export const db = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+});
+
 (async () => {
     try {
-        const [rows] = await db.query("SELECT 1");
+        await db.query("SELECT 1");
         console.log("✅ MySQL Connected!");
-    } catch (err) {
+    }
+    catch (err) {
         console.error("❌ Database connection error:", err);
     }
 })();
 
-app.listen(5000, '0.0.0.0', () => {
-    console.log("🚀 Server running on port 5000");
+app.use('/api', authRoutes);
+
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
 });
