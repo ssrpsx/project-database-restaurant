@@ -8,7 +8,6 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="text-xl font-bold text-white">My Restaurant</div>
 
-        {/* Hamburger button */}
         <div className="md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}

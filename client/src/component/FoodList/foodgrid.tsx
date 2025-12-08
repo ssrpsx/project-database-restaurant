@@ -67,7 +67,7 @@ const FoodGrid: React.FC = () => {
   categoryRefs.current = [];
 
   return (
-    <section id="food" className="container mx-auto mt-8">
+    <section id="food" className="container mx-auto mt-6">
       <div className="flex overflow-x-auto gap-4 mb-6 px-2 scrollbar-none">\
         <Link to="/order">
           <button
