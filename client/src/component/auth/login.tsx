@@ -27,6 +27,7 @@ const Login: React.FC = () => {
 
             localStorage.setItem("token", data.token);
             alert("Login Success!");
+            window.location.href = '/dashboard';
 
         }
         catch (err) {

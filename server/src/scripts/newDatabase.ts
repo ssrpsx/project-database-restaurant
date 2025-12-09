@@ -110,9 +110,15 @@ async function createDatabase() {
             "INSERT INTO user(USERNAME, PASSWORD) VALUES(?, ?) ON DUPLICATE KEY UPDATE PASSWORD = VALUES(PASSWORD)",
             ["admin", hashedPassword]
         );
+
         console.log("✔ Default user 'admin' inserted/updated with HASHED password.");
-
-
+        
+        await connection.query(
+            "INSERT INTO restaurant_info(NAME, DESCRIPTION, LOGO_URL) VALUES(?, ?, ?)",
+            ["My Restaurant", "TEXT", "/Banner.png"]
+        )
+        
+        console.log("✔ Default NAME, DESCRIPTION, LOGO_URL.");
         await connection.end();
     }
     catch (err) {

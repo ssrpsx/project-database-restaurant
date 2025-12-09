@@ -18,7 +18,22 @@ const FoodGrid: React.FC = () => {
   const [foodByCategory, setFoodByCategory] = useState<CategoryFood[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const categories = ['Pizza', 'Burger', 'Sushi', 'Pasta', 'Salad', 'Steak'];
+  const categories = [
+    'ผัด',             // ผัดไทย, ผัดซีอิ๊ว ฯลฯ
+    'ต้ม',             // ต้มยำ, ต้มข่า ฯลฯ
+    'แกง',             // แกงเขียวหวาน, แกงส้ม ฯลฯ
+    'ยำ',              // ยำวุ้นเส้น, ยำรวมมิตร ฯลฯ
+    'ส้มตำ',           // ส้มตำไทย, ส้มตำปู ฯลฯ
+    'ก๋วยเตี๋ยว',      // ก๋วยเตี๋ยวเรือ, ก๋วยเตี๋ยวน้ำตก ฯลฯ
+    'ราดหน้า',         // ราดหน้าหมู, ราดหน้าไก่ ฯลฯ
+    'อาหารทะเล',       // ปลาหมึกทอด, กุ้งเผา ฯลฯ
+    'สเต็ก',           // สเต็กหมู, สเต็กไก่ ฯลฯ
+    'อาหารจานเดียว',    // ข้าวมันไก่, ข้าวหน้าเป็ด ฯลฯ
+    'ของทอด',         // ไก่ทอด, หมูทอด, ทอดมัน ฯลฯ
+    'ของหวาน',         // ข้าวเหนียวมะม่วง, กล้วยบวชชี ฯลฯ
+    'เครื่องดื่ม'     // น้ำเปล่า, ชาเย็น, น้ำสมุนไพร ฯลฯ
+  ];
+
 
   // refs สำหรับ scroll
   const categoryRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -73,13 +88,13 @@ const FoodGrid: React.FC = () => {
           <button
             className="bg-[#181818] w-[150px] text-white px-4 py-2 rounded hover:bg-orange-600 shrink-0 "
           >
-            My Order
+            ออเดอร์ที่ฉันสั่ง
           </button>
         </Link>
         {foodByCategory.map((cat, idx) => (
           <button
             key={idx}
-            className="bg-[#181818] text-white px-4 py-2 rounded hover:bg-orange-600"
+            className="bg-[#181818] text-white px-4 py-2 rounded hover:bg-orange-600 text-nowrap"
             onClick={() => scrollToCategory(idx)}
           >
             {cat.category}

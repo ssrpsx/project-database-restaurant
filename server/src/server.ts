@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
 import authRoutes from './routes/auth.js';
+import settingSave from './routes/settingSave.js'
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ export const db = mysql.createPool({
 })();
 
 app.use('/api', authRoutes);
+app.use('/api/settings', settingSave);
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);

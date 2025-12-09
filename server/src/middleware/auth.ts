@@ -22,7 +22,7 @@ export const auth = async (
     try {
         const token = req.headers["authtoken"] as string;
 
-        if(!token) {
+        if (!token) {
             return res.status(401).send("No Token!");
         }
 

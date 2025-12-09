@@ -15,12 +15,12 @@ export const login = async (req: Request, res: Response) => {
         const { username, password } = req.body;
 
         const usernameNormalized = username.trim().toLowerCase();
-
+        
         const [rows] = await db.query<UserRow[]>(
-            "SELECT * FROM user WHERE username = ?",
+            "SELECT * FROM user WHERE USERNAME = ?",
             [usernameNormalized]
         );
-
+        
         const user = rows[0];
 
         if (!user) {
@@ -33,11 +33,11 @@ export const login = async (req: Request, res: Response) => {
         {
             return res.status(400).json({ message: "Invalid username or password." });
         }
-        
+
         const payload = {
             user: {
                 id: user.id,
-                username: user.username,
+                username: user.USERNAME,
             }
         };
 
