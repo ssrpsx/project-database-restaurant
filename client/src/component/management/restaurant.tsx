@@ -140,7 +140,7 @@ const SettingsPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 p-8 flex flex-col items-center gap-8">
+        <div className="min-h-screen bg-gray-100 p-8 mt-12 flex flex-col items-center gap-8">
 
             <div className="w-full max-w-2xl bg-white shadow-xl rounded-xl p-6 mt-4">
                 <h2 className="text-3xl font-bold text-teal-700 text-center mb-1">⚙️ ตั้งค่าหน้าร้าน</h2>

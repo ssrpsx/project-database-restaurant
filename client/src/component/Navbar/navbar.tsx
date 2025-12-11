@@ -183,7 +183,7 @@ const Navbar: React.FC = () => {
             Set menu
           </a>) : ("")}
           {user_status ? (<a
-            href="/#"
+            href="/settingOrder"
             className="block px-4 py-2 text-white hover:underline lg:inline-block ml-2"
 
             onClick={() => {

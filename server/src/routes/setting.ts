@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { post_restaurant_info, post_category, post_menu, post_table_number, post_order } from '../controllers/postData';
-import { get_restaurant_info, get_category, get_menus, get_menus_detail, get_table_number, get_search } from '../controllers/getData';
+import { get_restaurant_info, get_category, get_menus, get_menus_detail, get_table_number, get_search, get_kitchen_orders, get_orders_by_table } from '../controllers/getData';
 import { delete_category, delete_menu, delete_table_number } from '../controllers/deleteData';
-import { update_category, update_menu } from '../controllers/updateData';
+import { update_category, update_menu, update_order_status } from '../controllers/updateData';
 import { upload } from "../middleware/uploads";
 
 const router = Router();
@@ -29,6 +29,10 @@ router.get("/get_table_number", get_table_number)
 
 router.get("/search", get_search);
 
+router.get("/get_kitchen_orders", get_kitchen_orders);
+
+router.get("/get_orders_by_table/:table_number", get_orders_by_table);
+
 router.delete("/delete_category/:id", delete_category);
 
 router.delete("/delete_menu/:id", delete_menu);
@@ -38,5 +42,7 @@ router.delete("/delete_table_number/:id", delete_table_number);
 router.put("/update_category/:id", update_category);
 
 router.put("/update_menu/:id", upload.single("image"), update_menu);
+
+router.put("/update_status/:id", update_order_status);
 
 export default router;

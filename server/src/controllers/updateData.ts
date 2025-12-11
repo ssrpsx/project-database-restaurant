@@ -39,7 +39,7 @@ export const update_menu = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const { name, price, desc } = req.body;
-        
+
         const file = req.file;
 
         const [rows] = await db.query<any[]>(
@@ -62,14 +62,14 @@ export const update_menu = async (req: Request, res: Response) => {
             values.push(price);
         }
 
-        if (desc !== undefined && desc !== "null") { 
+        if (desc !== undefined && desc !== "null") {
             fields.push("DESCRIPTION = ?");
             values.push(desc);
         }
 
         if (file) {
             const imagePath = `/uploads/${file.filename}`;
-            
+
             fields.push("IMAGE_URL = ?");
             values.push(imagePath);
         }
@@ -84,14 +84,28 @@ export const update_menu = async (req: Request, res: Response) => {
 
         await db.query(sql, values);
 
-        return res.json({ 
+        return res.json({
             message: "Update Successfully",
             // ส่ง path รูปใหม่กลับไปเผื่อ Frontend อยากใช้
-            newImage: file ? `/uploads/${file.filename}` : null 
+            newImage: file ? `/uploads/${file.filename}` : null
         });
 
     } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Server error" });
+    }
+};
+
+export const update_order_status = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        await db.query("UPDATE orders SET status = ? WHERE id = ?", [status, id]);
+        res.json({ message: "Status updated" });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
     }
 };

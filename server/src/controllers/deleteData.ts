@@ -59,8 +59,6 @@ export const delete_menu = async (req: Request, res: Response) => {
 
 export const delete_table_number = async (req: Request, res: Response) => {
     try {
-        console.log("ada")
-
         const id = req.params.id;
 
         const [rows] = await db.query<data[]>(

@@ -288,8 +288,8 @@ const MenuPage: React.FC = () => {
                                             <ul className="divide-y divide-gray-100 mb-4">
                                                 {categoryMenus.map(menu => (
                                                     <li key={menu.ID} className="py-3 flex justify-between items-center hover:bg-gray-50 px-2 rounded">
-                                                        <div>
-                                                            <img src={menu.IMAGE_URL} className='w-[300px] h-[300px]' alt="" />
+                                                        <div className='mr-2 md:mr-0'>
+                                                            <img src={menu.IMAGE_URL} className='w-[150px] md:w-[300px] md:h-[300px]' alt="" />
                                                             <span className="font-medium text-gray-800">{menu.NAME}</span>
                                                             <span className="ml-4 text-teal-600 font-bold">{menu.PRICE} ฿</span>
                                                         </div>

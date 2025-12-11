@@ -9,11 +9,22 @@ import RevenueChart from './component/management/revenueChart'
 import SettingsPage from './component/management/restaurant'
 import SettingMenu from './component/management/menu'
 import SearchPage from './component/search/searchPage'
+import SettingOrder from './component/order/orderPage'
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar />
+              <Home />
+            </>
+          }
+        />
+        
         <Route
           path="/:table_number"
           element={
@@ -90,6 +101,16 @@ const App: React.FC = () => {
             <>
               <Navbar />
               <SettingMenu />
+            </>
+          }
+        />
+
+        <Route
+          path="/settingOrder"
+          element={
+            <>
+              <Navbar />
+              <SettingOrder />
             </>
           }
         />
