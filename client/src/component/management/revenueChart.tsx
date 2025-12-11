@@ -10,8 +10,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-
-import type { ChartData, ChartOptions } from 'chart.js'; // เพิ่ม Type Options
+import type { ChartData, ChartOptions } from 'chart.js';
 import { jwtDecode } from 'jwt-decode';
 
 ChartJS.register(
@@ -37,38 +36,34 @@ interface MyTokenPayload {
     iat?: number;
 }
 
-// Mock Data
-const fetchMonthlyRevenue = async (year: number): Promise<MonthlyRevenueData[]> => {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return [
-        { month: 1, revenue: 150000 }, { month: 2, revenue: 210000 },
-        { month: 3, revenue: 180000 }, { month: 4, revenue: 300000 },
-        { month: 5, revenue: 250000 }, { month: 6, revenue: 270000 },
-        { month: 7, revenue: 320000 }, { month: 8, revenue: 350000 },
-        { month: 9, revenue: 290000 }, { month: 10, revenue: 410000 },
-        { month: 11, revenue: 450000 }, { month: 12, revenue: 600000 },
-    ];
-};
-
 const RevenueChart: React.FC = () => {
     const [revenueData, setRevenueData] = useState<MonthlyRevenueData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [user, setUser] = useState<string>("");
-    const currentYear = 2024;
+
+    const currentYear = new Date().getFullYear();
 
     useEffect(() => {
-        const loadData = async () => {
+        const fetchRevenue = async () => {
             try {
                 setLoading(true);
-                const data = await fetchMonthlyRevenue(currentYear);
+                const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+                const res = await fetch(`${API_URL}/api/settings/get_revenue_yearly?year=${currentYear}`);
+
+                if (!res.ok) throw new Error("Fetch failed");
+
+                const data = await res.json();
                 setRevenueData(data);
             } catch (error) {
                 console.error("Error fetching revenue data:", error);
+                setRevenueData(Array.from({ length: 12 }, (_, i) => ({ month: i + 1, revenue: 0 })));
             } finally {
                 setLoading(false);
             }
         };
-        loadData();
+
+        fetchRevenue();
     }, []);
 
     useEffect(() => {
@@ -91,6 +86,7 @@ const RevenueChart: React.FC = () => {
             'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.',
             'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'
         ];
+
         const dataPoints = revenueData.map(d => d.revenue);
 
         return {
@@ -99,30 +95,29 @@ const RevenueChart: React.FC = () => {
                 {
                     label: 'รายรับรวม (บาท)',
                     data: dataPoints,
-                    borderColor: 'rgb(13, 148, 136)', // Teal-600
-                    backgroundColor: 'rgba(20, 184, 166, 0.2)', // Teal-500 alpha
-                    tension: 0.4, // เพิ่มความโค้งให้ดู modern ขึ้น
+                    borderColor: 'rgb(13, 148, 136)',
+                    backgroundColor: 'rgba(20, 184, 166, 0.2)',
+                    tension: 0.4,
                     pointRadius: 4,
                     pointHoverRadius: 8,
                     pointBackgroundColor: '#ffffff',
                     pointBorderWidth: 2,
-                    fill: true, // ลองเปิด fill ดูถ้ารูปแบบกราฟรองรับ
+                    fill: true,
                 },
             ],
         };
     }, [revenueData]);
 
-    // ปรับ Options ให้ Responsive จริงๆ
     const options: ChartOptions<'line'> = {
         responsive: true,
-        maintainAspectRatio: false, // 🔴 สำคัญ: ปิดเพื่อใ้ห้เราคุมความสูงเองผ่าน CSS
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'top',
                 align: 'end',
                 labels: { boxWidth: 12, usePointStyle: true }
             },
-            title: { display: false }, // ซ่อน Title ในกราฟเพราะเรามี Header HTML แล้ว
+            title: { display: false },
             tooltip: {
                 backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 titleColor: '#1f2937',
@@ -145,8 +140,7 @@ const RevenueChart: React.FC = () => {
             y: {
                 grid: { color: '#f3f4f6' },
                 ticks: {
-                    callback: function(value: any) {
-                        // ย่อตัวเลขแกน Y บนมือถือ (เช่น 1k, 1M) ถ้าต้องการ หรือปล่อยไว้
+                    callback: function (value: any) {
                         return new Intl.NumberFormat('en-US', { notation: "compact", compactDisplay: "short" }).format(value);
                     },
                     font: { size: 11 }
@@ -165,18 +159,20 @@ const RevenueChart: React.FC = () => {
             <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
                 <div className="w-full max-w-4xl p-12 text-center bg-white shadow-lg rounded-2xl border border-gray-100">
                     <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-teal-500 border-t-transparent mb-4"></div>
-                    <p className="text-teal-600 font-medium">กำลังประมวลผลข้อมูล...</p>
+                    <p className="text-teal-600 font-medium">กำลังโหลดข้อมูลการเงิน...</p>
                 </div>
             </div>
         );
     }
 
+    const maxRevenue = revenueData.length > 0 ? Math.max(...revenueData.map(d => d.revenue)) : 0;
+    const minRevenue = revenueData.length > 0 ? Math.min(...revenueData.map(d => d.revenue)) : 0;
+
     return (
-        <div className="min-h-screen bg-slate-50 mt-16 py-8 px-4 sm:px-6 lg:px-8 font-sans">
-            
+        <div className="min-h-screen bg-slate-50 py-8 mt-14 px-4 sm:px-6 lg:px-8 font-sans">
+
             <div className="max-w-5xl mx-auto space-y-6">
-                
-                {/* 1. Header Card */}
+
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
                     <div>
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
@@ -191,29 +187,24 @@ const RevenueChart: React.FC = () => {
                     </div>
                 </div>
 
-                {/* 2. Main Chart Card */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
                     <div className="p-6 border-b border-gray-100">
-                        <h3 className="text-lg font-semibold text-gray-700">ภาพรวมรายรับรายเดือน</h3>
+                        <h3 className="text-lg font-semibold text-gray-700">ภาพรวมรายรับรายเดือน (จากยอดขายจริง)</h3>
                     </div>
-                    
+
                     <div className="p-4 md:p-6">
-                        {/* Wrapper เพื่อคุมความสูงกราฟ */}
-                        {/* Mobile: สูง 300px, Tablet+: สูง 400px */}
                         <div className="relative h-[300px] md:h-[400px] w-full">
                             <Line options={options} data={chartData} />
                         </div>
                     </div>
                 </div>
 
-                {/* 3. Summary Cards (Grid Responsive) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Card: Max */}
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex items-center justify-between hover:shadow-md transition-shadow">
                         <div>
                             <p className="text-sm font-medium text-gray-400 uppercase tracking-wider">รายรับสูงสุด</p>
                             <p className="text-2xl font-bold text-teal-600 mt-1">
-                                {new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB', minimumFractionDigits: 0 }).format(Math.max(...revenueData.map(d => d.revenue)))}
+                                {new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB', minimumFractionDigits: 0 }).format(maxRevenue)}
                             </p>
                         </div>
                         <div className="p-3 bg-teal-50 rounded-full text-teal-600">
@@ -223,12 +214,11 @@ const RevenueChart: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Card: Min */}
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex items-center justify-between hover:shadow-md transition-shadow">
                         <div>
                             <p className="text-sm font-medium text-gray-400 uppercase tracking-wider">รายรับต่ำสุด</p>
                             <p className="text-2xl font-bold text-rose-500 mt-1">
-                                {new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB', minimumFractionDigits: 0 }).format(Math.min(...revenueData.map(d => d.revenue)))}
+                                {new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB', minimumFractionDigits: 0 }).format(minRevenue)}
                             </p>
                         </div>
                         <div className="p-3 bg-rose-50 rounded-full text-rose-500">
@@ -239,7 +229,6 @@ const RevenueChart: React.FC = () => {
                     </div>
                 </div>
 
-                {/* 4. Action Buttons */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                     <a href='/settingPage' className="flex items-center justify-center gap-2 px-6 py-4 bg-gray-800 text-white rounded-xl hover:bg-gray-900 transition-colors shadow-lg shadow-gray-200 active:scale-95 transform duration-150">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

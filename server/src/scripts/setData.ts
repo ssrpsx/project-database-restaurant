@@ -15,9 +15,6 @@ async function createDatabase() {
 
         await connection.query(`USE Project`);
 
-        // ============================
-        // INSERT CATEGORY
-        // ============================
         const categories = [
             'ผัด', 'ต้ม', 'แกง', 'ยำ', 'ส้มตำ',
             'ก๋วยเตี๋ยว', 'ราดหน้า', 'อาหารทะเล',
@@ -33,10 +30,6 @@ async function createDatabase() {
         );
 
         console.log("✔ INSERT CATEGORY SUCCESS");
-
-        // ============================
-        // INSERT MENU ITEMS
-        // ============================
 
         const menuItems = [
             // ผัด (1)
@@ -111,10 +104,47 @@ async function createDatabase() {
 
         console.log("✔ INSERT MENU ITEM SUCCESS");
 
+        const tables = [
+            ['A1'], ['A2'], ['A3'], ['A4'], ['A5']
+        ];
+
+        await connection.query(
+            `INSERT INTO table_info (TABLE_NUMBER) VALUES ?`,
+            [tables]
+        );
+
+        console.log("✔ INSERT TABLE INFO SUCCESS");
+
+        const NUM_RECORDS = 1000;
+        const values = [];
+        for (let i = 0; i < NUM_RECORDS; i++) {
+
+            const daysAgo = Math.floor(Math.random() * 365);
+            const date = new Date();
+            date.setDate(date.getDate() - daysAgo);
+
+            date.setHours(Math.floor(Math.random() * 24));
+            date.setMinutes(Math.floor(Math.random() * 60));
+
+            const createdAt = date.toISOString().slice(0, 19).replace('T', ' ');
+
+            const total = (Math.random() * (3000 - 100) + 100).toFixed(2);
+
+            const tableId = Math.floor(Math.random() * 5) + 1;
+
+            values.push([tableId, 'paid', total, createdAt, createdAt]);
+        }
+
+        const sql = `INSERT INTO orders (TABLE_ID, STATUS, TOTAL, created_at, updated_at) VALUES ?`;
+        await connection.query(sql, [values]);
+
+        console.log(`✔ INSERT DATA SUCCESS`);
 
         await connection.end();
 
-    } catch (err) {
+        console.log(`✔ INSERT ALL SUCCESS`);
+    }
+    catch (err) {
         console.error("❌ ERROR:", err);
     }
 }

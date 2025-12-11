@@ -20,9 +20,8 @@ interface dataMenuItem extends RowDataPacket {
 export const post_restaurant_info = async (req: Request, res: Response) => {
     try {
         const { storeTitle, storeDescription } = req.body;
-        const file = req.file; // 👈 มาจาก multer
+        const file = req.file;
 
-        // โหลดข้อมูลปัจจุบัน
         const [rows] = await db.query<dataRestaurantInfo[]>(
             "SELECT * FROM restaurant_info WHERE id = 1"
         );

@@ -113,7 +113,6 @@ const SettingsPage: React.FC = () => {
         }
     };
 
-    // --- Handler ลบโต๊ะ ---
     const handleDeleteTable = async (id: number) => {
         if (!confirm("ยืนยันการลบโต๊ะนี้?")) return;
         try {

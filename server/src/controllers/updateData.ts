@@ -86,7 +86,6 @@ export const update_menu = async (req: Request, res: Response) => {
 
         return res.json({
             message: "Update Successfully",
-            // ส่ง path รูปใหม่กลับไปเผื่อ Frontend อยากใช้
             newImage: file ? `/uploads/${file.filename}` : null
         });
 

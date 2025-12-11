@@ -45,7 +45,6 @@ const Login: React.FC = () => {
                 <h1 className="text-3xl font-bold mb-6 text-white text-center">Login</h1>
 
                 <form onSubmit={handleLogin} className="flex flex-col gap-4">
-                    {/* Username */}
                     <div className="flex flex-col">
                         <label className="mb-2 font-semibold text-gray-300" htmlFor="username">Username</label>
                         <input
@@ -59,7 +58,6 @@ const Login: React.FC = () => {
                         />
                     </div>
 
-                    {/* Password */}
                     <div className="flex flex-col">
                         <label className="mb-2 font-semibold text-gray-300" htmlFor="password">Password</label>
                         <input
@@ -73,7 +71,6 @@ const Login: React.FC = () => {
                         />
                     </div>
 
-                    {/* Submit button */}
                     <button
                         type="submit"
                         disabled={loading}

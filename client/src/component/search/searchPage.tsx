@@ -66,7 +66,6 @@ const SearchPage: React.FC = () => {
                 </p>
             )}
 
-            {/* Layout แบบหน้า Menu */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {results.map(item => (
                     <Link key={item.ID} to={`/${table_number}/menu/${item.ID}`}>

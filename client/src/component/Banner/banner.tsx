@@ -9,8 +9,6 @@ interface RestaurantInfo {
     updated_at: string;
 }
 
-
-
 // useEffect(() => {
 //     console.log(data)
 // }, [data])

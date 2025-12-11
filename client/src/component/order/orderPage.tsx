@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-// Interface ปรับให้ตรงกับข้อมูลที่ Backend Group มาให้
 interface KitchenItem {
     item_id: number;
     name: string;
     quantity: number;
-    image: string; // รับ URL รูปภาพมาด้วย
+    image: string;
 }
 
 interface KitchenOrder {
@@ -13,7 +12,7 @@ interface KitchenOrder {
     table_number: string;
     status: 'pending' | 'preparing' | 'served' | 'paid';
     created_at: string;
-    items: KitchenItem[]; // เป็น Array ของรายการอาหาร
+    items: KitchenItem[];
 }
 
 const KitchenPage: React.FC = () => {
@@ -64,7 +63,6 @@ const KitchenPage: React.FC = () => {
         }
     };
 
-    // Helper Functions สำหรับ UI
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'pending': return 'border-l-8 border-red-500 bg-red-50';
@@ -105,7 +103,6 @@ const KitchenPage: React.FC = () => {
                         return (
                             <div key={order.id} className={`rounded-lg shadow-xl overflow-hidden flex flex-col  text-gray-800 ${getStatusColor(order.status)} transition-all duration-300`}>
                                 
-                                {/* Header: Table No. */}
                                 <div className="p-4 border-b border-black/5 flex justify-between items-start">
                                     <div>
                                         <h2 className="text-4xl font-black text-gray-800">โต๊ะ {order.table_number}</h2>
@@ -121,13 +118,11 @@ const KitchenPage: React.FC = () => {
                                     </div>
                                 </div>
 
-                                {/* Body: Menu Items List */}
                                 <div className="p-3 flex-1 bg-white/60">
                                     <ul className="space-y-3">
                                         {order.items.map((item) => (
                                             <li key={item.item_id} className="flex items-center bg-white p-2 rounded shadow-sm border border-gray-100">
                                                 
-                                                {/* 🖼️ รูปภาพเมนู */}
                                                 <div className="w-12 h-12 shrink-0 rounded-md overflow-hidden bg-gray-200 mr-3">
                                                     <img 
                                                         src={item.image ? `${item.image}` : '/image.png'} 
@@ -137,14 +132,12 @@ const KitchenPage: React.FC = () => {
                                                     />
                                                 </div>
 
-                                                {/* รายละเอียด */}
                                                 <div className="flex-1">
                                                     <span className="font-bold text-gray-800 block text-lg leading-tight">
                                                         {item.name}
                                                     </span>
                                                 </div>
 
-                                                {/* จำนวน */}
                                                 <div className="bg-gray-800 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg ml-2">
                                                     {item.quantity}
                                                 </div>
@@ -153,7 +146,6 @@ const KitchenPage: React.FC = () => {
                                     </ul>
                                 </div>
 
-                                {/* Footer: Button */}
                                 <div className="p-3 bg-white/80 mt-auto">
                                     <button
                                         onClick={() => handleNextStatus(order.id, order.status)}

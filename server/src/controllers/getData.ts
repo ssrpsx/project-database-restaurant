@@ -195,8 +195,6 @@ export const get_kitchen_orders = async (req: Request, res: Response) => {
     }
 };
 
-// ordersController.ts
-
 export const get_orders_by_table = async (req: Request, res: Response) => {
     try {
         const { table_number } = req.params;
@@ -253,8 +251,44 @@ export const get_orders_by_table = async (req: Request, res: Response) => {
         console.log(result)
         res.json(result);
 
-    } 
+    }
     catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+export const get_yearly_revenue = async (req: Request, res: Response) => {
+    try {
+        const currentYear = req.query.year || new Date().getFullYear();
+
+        const sql = `
+            SELECT 
+                MONTH(created_at) as month, 
+                SUM(TOTAL) as total_revenue
+            FROM orders 
+            WHERE STATUS = 'paid' 
+            AND YEAR(created_at) = ?
+            GROUP BY MONTH(created_at)
+            ORDER BY month ASC
+        `;
+
+        const [rows] = await db.query<any[]>(sql, [currentYear]);
+
+
+        const fullYearData = [];
+        for (let m = 1; m <= 12; m++) {
+            const found = rows.find(r => r.month === m);
+
+            fullYearData.push({
+                month: m,
+                revenue: found ? parseFloat(found.total_revenue) : 0
+            });
+        }
+
+        res.json(fullYearData);
+
+    } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Server error" });
     }

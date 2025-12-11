@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { post_restaurant_info, post_category, post_menu, post_table_number, post_order } from '../controllers/postData';
-import { get_restaurant_info, get_category, get_menus, get_menus_detail, get_table_number, get_search, get_kitchen_orders, get_orders_by_table } from '../controllers/getData';
+import { get_restaurant_info, get_category, get_menus, get_menus_detail, get_table_number, get_search, get_kitchen_orders, get_orders_by_table, get_yearly_revenue } from '../controllers/getData';
 import { delete_category, delete_menu, delete_table_number } from '../controllers/deleteData';
 import { update_category, update_menu, update_order_status } from '../controllers/updateData';
 import { upload } from "../middleware/uploads";
@@ -32,6 +32,8 @@ router.get("/search", get_search);
 router.get("/get_kitchen_orders", get_kitchen_orders);
 
 router.get("/get_orders_by_table/:table_number", get_orders_by_table);
+
+router.get("/get_revenue_yearly", get_yearly_revenue);
 
 router.delete("/delete_category/:id", delete_category);
 

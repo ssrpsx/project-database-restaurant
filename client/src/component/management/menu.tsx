@@ -19,17 +19,14 @@ const MenuPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    // --- Fetch Data ---
     const fetchData = async () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
         try {
-            // ดึงหมวดหมู่
             const catRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/settings/get_category`);
             const catData = await catRes.json();
 
-            // ดึงเมนู
             const menuRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/settings/get_menus`);
             const menuData = await menuRes.json()
 
@@ -84,7 +81,6 @@ const MenuPage: React.FC = () => {
         fetchData();
     };
 
-    // --- Actions: Menu ---
     const handleAddMenu = async (categoryId: number) => {
         const name = prompt("ชื่อเมนูอาหาร:");
         if (name === null) return;
@@ -204,10 +200,9 @@ const MenuPage: React.FC = () => {
     if (loading) return <div className="p-10 text-center mt-20 text-gray-700">Loading...</div>;
 
     return (
-        <div className="min-h-screen bg-gray-100 p-8">
+        <div className="min-h-screen mt-14 bg-gray-100 p-8">
             <div className="max-w-4xl mx-auto space-y-8">
 
-                {/* Header */}
                 <div className="flex justify-between items-center">
                     <h1 className="text-3xl font-bold text-teal-800">จัดการรายการอาหาร</h1>
                     <button
@@ -218,7 +213,6 @@ const MenuPage: React.FC = () => {
                     </button>
                 </div>
 
-                {/* Section 1: Categories List (แบบง่าย) */}
                 <div className="bg-white p-6 rounded-lg shadow">
                     <h2 className="text-xl font-bold mb-4 text-gray-700 border-b pb-2">📂 รายการหมวดหมู่ทั้งหมด</h2>
                     {categories.length === 0 ? (
@@ -231,7 +225,6 @@ const MenuPage: React.FC = () => {
                                     <div key={cat.ID} className="flex justify-between items-center bg-gray-50 p-3 rounded border">
                                         <span className="font-semibold text-lg text-gray-700">{cat.NAME}</span>
                                         <div className="space-x-2">
-                                            {/* ปุ่มแก้ไข (คุณอาจจะทำเพิ่มทีหลัง) */}
                                             <button
                                                 onClick={() => handleUpdateCategory(cat.ID)}
                                                 className="text-blue-500 hover:text-blue-700 text-sm"
@@ -253,7 +246,6 @@ const MenuPage: React.FC = () => {
                         onClick={handleAddCategory}
                         className="mt-6 bg-teal-600 h-10 hover:bg-teal-700 text-white rounded-sm p-4 shadow-xl transition-transform transform hover:scale-105 flex items-center gap-2 z-8"
                     >
-                        {/* ไอคอนบวก (+) */}
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                         </svg>
@@ -261,24 +253,20 @@ const MenuPage: React.FC = () => {
                     </button>
                 </div>
 
-                {/* Section 2: Menu by Category (แบบ Parent -> Child) */}
                 <div className="space-y-6 bg-white p-6 rounded-lg shadow">
                     <h2 className="text-2xl font-bold text-gray-800 border-b pb-4">🍽️ เมนูอาหาร (แยกตามหมวดหมู่)</h2>
 
                     {categories.map(category => {
-                        // Filter หาเมนูที่อยู่ในหมวดหมู่นี้
                         console.log("category : ", category)
                         const categoryMenus = menus.filter(m => m.CATEGORY_ID === category.ID);
 
                         return (
                             <div key={category.ID} className="bg-white rounded-lg shadow overflow-hidden">
-                                {/* หัวข้อหมวดหมู่ */}
                                 <div className="bg-teal-50 p-4 border-b border-teal-100 flex justify-between items-center">
                                     <h3 className="text-xl font-bold text-teal-800">{category.NAME}</h3>
                                     <span className="text-sm text-gray-500">{categoryMenus.length} รายการ</span>
                                 </div>
 
-                                {/* รายการเมนูภายใน */}
                                 <div className="p-4">
                                     {categoryMenus.length === 0 ? (
                                         <p className="text-gray-400 text-sm italic mb-4">ยังไม่มีเมนูในหมวดนี้</p>
@@ -301,7 +289,7 @@ const MenuPage: React.FC = () => {
                                                                     </label>
                                                                     <input
                                                                         type="file"
-                                                                        // เมื่อเลือกไฟล์ ให้เก็บลง State กลาง (selectedFile)
+                                                                        
                                                                         onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
                                                                         accept="image/png, image/jpeg"
                                                                         className="block w-full text-sm text-gray-500
@@ -316,7 +304,6 @@ const MenuPage: React.FC = () => {
                                                                 <div className='w-full text-center gap-6 mt-4 flex pl-1'>
                                                                     <button
                                                                         onClick={() => {
-                                                                            // ส่ง selectedFile (State) เข้าไปในฟังก์ชัน
                                                                             handleUpdateMenu(menu.ID, selectedFile);
                                                                         }}
                                                                         className="text-gray-400 hover:text-blue-600"
@@ -338,7 +325,6 @@ const MenuPage: React.FC = () => {
                                             </ul>
                                         )}
 
-                                    {/* ปุ่มเพิ่มเมนูเฉพาะหมวดหมู่นี้ */}
                                     <button
                                         onClick={() => handleAddMenu(category.ID)}
                                         className="w-full py-2 border-2 border-dashed border-gray-300 text-gray-500 rounded hover:border-teal-500 hover:text-teal-600 transition"
