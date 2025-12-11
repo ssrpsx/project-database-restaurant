@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
-    "init-db": "ts-node src/scripts/newDatabase.ts"
+    "init-db": "ts-node src/scripts/newDatabase.ts",
+    "set-db": "ts-node src/scripts/setData.ts"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.0.0",
     "@types/node": "^24.10.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",

@@ -4,23 +4,98 @@ import Navbar from './component/Navbar/navbar'
 import MenuDetail from './component/Menu/menudetail'
 import Login from './component/auth/login'
 import Home from './component/page/home'
-import OrderList from './component/Menu/orderlist' 
+import OrderList from './component/Menu/orderlist'
 import RevenueChart from './component/management/revenueChart'
 import SettingsPage from './component/management/restaurant'
+import SettingMenu from './component/management/menu'
+import SearchPage from './component/search/searchPage'
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Navbar />
       <Routes>
-        <Route path= "/" element={<Home />} />
-        <Route path= "/login" element={<Login />} />
-        <Route path= "/menu" element={<MenuDetail />} />
-        <Route path= "/order" element={<OrderList />} />
-        <Route path= "/dashboard" element={<RevenueChart />} />
-        <Route path='/settingPage' element={<SettingsPage/>} />
+        <Route
+          path="/:table_number"
+          element={
+            <>
+              <Navbar />
+              <Home />
+            </>
+          }
+        />
+
+        <Route
+          path="/:table_number/menu/:id"
+          element={
+            <>
+              <Navbar />
+              <MenuDetail />
+            </>
+          }
+        />
+
+        <Route
+          path="/:table_number/order"
+          element={
+            <>
+              <Navbar />
+              <OrderList />
+            </>
+          }
+        />
+
+        <Route
+          path="/:table_number/search"
+          element={
+            <>
+              <Navbar />
+              <SearchPage />
+            </>
+          }
+        />
+
+        <Route
+          path="/login"
+          element={
+            <>
+              <Navbar />
+              <Login />
+            </>
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <>
+              <Navbar />
+              <RevenueChart />
+            </>
+          }
+        />
+
+        <Route
+          path="/settingPage"
+          element={
+            <>
+              <Navbar />
+              <SettingsPage />
+            </>
+          }
+        />
+
+        <Route
+          path="/settingMenu"
+          element={
+            <>
+              <Navbar />
+              <SettingMenu />
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
+
   )
 }
 

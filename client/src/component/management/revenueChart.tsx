@@ -194,8 +194,8 @@ const RevenueChart: React.FC = () => {
 
             {/* ทำให้กว้างเท่าด้านบน */}
             <div className="max-w-4xl mx-auto mt-6 flex gap-4 justify-center">
-                <a className="px-4 py-2 bg-blue-500 text-white rounded" href='/settingPage'>จัดการร้านค้า</a>
-                <a className="px-4 py-2 bg-green-500 text-white rounded" href='#'>จัดการเมนูอาหาร</a>
+                <a className="px-4 py-2 bg-blue-800 text-white rounded" href='/settingPage'>จัดการร้านค้า</a>
+                <a className="px-4 py-2 bg-teal-600 text-white rounded" href='/settingMenu'>จัดการเมนูอาหาร</a>
             </div>
         </div>
 

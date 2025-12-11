@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { useParams } from 'react-router-dom';
 
 interface MyTokenPayload {
   user: {
@@ -24,6 +25,7 @@ const Navbar: React.FC = () => {
   const [user_status, set_user_status] = useState<boolean>(false);
   const [data, setData] = useState<RestaurantInfo | null>(null);
   const [showPopup, setShowPopup] = useState(true);
+  const { table_number } = useParams();
 
   void (user);
 
@@ -32,7 +34,7 @@ const Navbar: React.FC = () => {
 
     const load = async () => {
       try {
-        const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/settings/get");
+        const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/settings/get_restaurant_info");
         const json = await res.json();
         setData(json);
       }
@@ -77,15 +79,12 @@ const Navbar: React.FC = () => {
 
           <div className="bg-white w-11/12 max-w-md rounded-xl shadow-xl p-6 animate-fadeIn">
 
-            {/* หัวข้อ */}
             <h2 className="text-2xl font-bold text-center mb-3 text-gray-800">📢 ประกาศ</h2>
 
-            {/* เนื้อหา */}
             <p className="text-gray-700 text-center mb-6 wrap-break-word">
               {data?.DESCRIPTION}
             </p>
 
-            {/* ปุ่มปิด */}
             <button
               onClick={() => {
                 const today = new Date().toDateString();
@@ -147,7 +146,7 @@ const Navbar: React.FC = () => {
   `}
         >
           <a
-            href="/"
+            href={`/${table_number}/`}
             className="block px-4 py-2 text-white hover:underline lg:inline-block ml-2"
             onClick={() => setIsOpen(false)}
           >
@@ -174,7 +173,7 @@ const Navbar: React.FC = () => {
             Set restaurant
           </a>) : ("")}
           {user_status ? (<a
-            href="/#"
+            href="/settingMenu"
             className="block px-4 py-2 text-white hover:underline lg:inline-block ml-2"
 
             onClick={() => {

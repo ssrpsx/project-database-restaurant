@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 interface OrderItem {
   name: string;
@@ -34,7 +35,8 @@ const mockOrders: OrderRound[] = [
 ];
 
 const OrderList: React.FC = () => {
-  // คำนวณยอดรวมทั้งหมด
+  const { table_number } = useParams();
+
   const totalPrice = mockOrders.reduce(
     (sum, round) => sum + round.items.reduce((s, item) => s + item.price * item.quantity, 0),
     0
@@ -101,7 +103,7 @@ const OrderList: React.FC = () => {
 
         {/* ปุ่มปิด */}
         <a
-          href='/'
+          href={`/${table_number}/`}
           className="w-full text-center bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
           ปิด
         </a>

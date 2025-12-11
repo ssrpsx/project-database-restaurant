@@ -1,8 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react';
 import FoodItem from './fooditem';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+
+interface RawCategory {
+  ID: number;
+  NAME: string;
+}
+
+interface RawMenu {
+  ID: number;
+  NAME: string;
+  PRICE: number;
+  IMAGE_URL: string;
+  CATEGORY_ID: number;
+}
 
 interface FoodData {
+  id: number;
   name: string;
   price: string;
   imageURL: string;
@@ -10,6 +24,7 @@ interface FoodData {
 }
 
 interface CategoryFood {
+  id: number;
   category: string;
   items: FoodData[];
 }
@@ -17,49 +32,47 @@ interface CategoryFood {
 const FoodGrid: React.FC = () => {
   const [foodByCategory, setFoodByCategory] = useState<CategoryFood[]>([]);
   const [loading, setLoading] = useState(true);
+  const { table_number } = useParams();
 
-  const categories = [
-    'ผัด',             // ผัดไทย, ผัดซีอิ๊ว ฯลฯ
-    'ต้ม',             // ต้มยำ, ต้มข่า ฯลฯ
-    'แกง',             // แกงเขียวหวาน, แกงส้ม ฯลฯ
-    'ยำ',              // ยำวุ้นเส้น, ยำรวมมิตร ฯลฯ
-    'ส้มตำ',           // ส้มตำไทย, ส้มตำปู ฯลฯ
-    'ก๋วยเตี๋ยว',      // ก๋วยเตี๋ยวเรือ, ก๋วยเตี๋ยวน้ำตก ฯลฯ
-    'ราดหน้า',         // ราดหน้าหมู, ราดหน้าไก่ ฯลฯ
-    'อาหารทะเล',       // ปลาหมึกทอด, กุ้งเผา ฯลฯ
-    'สเต็ก',           // สเต็กหมู, สเต็กไก่ ฯลฯ
-    'อาหารจานเดียว',    // ข้าวมันไก่, ข้าวหน้าเป็ด ฯลฯ
-    'ของทอด',         // ไก่ทอด, หมูทอด, ทอดมัน ฯลฯ
-    'ของหวาน',         // ข้าวเหนียวมะม่วง, กล้วยบวชชี ฯลฯ
-    'เครื่องดื่ม'     // น้ำเปล่า, ชาเย็น, น้ำสมุนไพร ฯลฯ
-  ];
-
-
-  // refs สำหรับ scroll
   const categoryRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result: CategoryFood[] = [];
+        const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-        for (let i = 0; i < categories.length; i++) {
-          const category = categories[i];
-          await new Promise((resolve) => setTimeout(resolve, 100));
+        const [catRes, menuRes] = await Promise.all([
+          fetch(`${API_URL}/api/settings/get_category`),
+          fetch(`${API_URL}/api/settings/get_menus`)
+        ]);
 
-          const mockData: FoodData[] = [
-            { name: `${category} 1`, price: `$${10 + i}`, imageURL: '/image.png', category },
-            { name: `${category} 2`, price: `$${12 + i}`, imageURL: '/image.png', category },
-            { name: `${category} 3`, price: `$${14 + i}`, imageURL: '/image.png', category },
-          ];
+        const rawCategories: RawCategory[] = await catRes.json();
+        const rawMenus: RawMenu[] = await menuRes.json();
 
-          result.push({ category, items: mockData });
-        }
+        const result: CategoryFood[] = rawCategories.map((cat) => {
+          const itemsInCat = rawMenus.filter((m) => m.CATEGORY_ID === cat.ID);
+
+          const formattedItems: FoodData[] = itemsInCat.map((m) => ({
+            id: m.ID,
+            name: m.NAME,
+            price: `${m.PRICE} ฿`,
+            imageURL: m.IMAGE_URL ? `${m.IMAGE_URL}` : 'image.png',
+            category: cat.NAME
+          }));
+
+          return {
+            id: cat.ID,
+            category: cat.NAME,
+            items: formattedItems
+          };
+        });
 
         setFoodByCategory(result);
-      } catch (err) {
-        console.error(err);
-      } finally {
+      }
+      catch (err) {
+        console.error("Error fetching food data:", err);
+      }
+      finally {
         setLoading(false);
       }
     };
@@ -78,13 +91,12 @@ const FoodGrid: React.FC = () => {
     }
   };
 
-  // reset refs array ทุกครั้งก่อน map
   categoryRefs.current = [];
 
   return (
     <section id="food" className="container mx-auto mt-6">
-      <div className="flex overflow-x-auto gap-4 mb-6 px-2 scrollbar-none">\
-        <Link to="/order">
+      <div className="flex overflow-x-auto gap-4 mb-6 px-2 scrollbar-none">
+        <Link to={`/${table_number}/order`}>
           <button
             className="bg-[#181818] w-[150px] text-white px-4 py-2 rounded hover:bg-orange-600 shrink-0 "
           >
@@ -113,9 +125,13 @@ const FoodGrid: React.FC = () => {
             {cat.items.map((food, index) => (
               <Link
                 key={index}
-                to={`/menu`}
+                to={`/${table_number}/menu/${food.id}`}
               >
-                <FoodItem key={index} {...food} />
+                <FoodItem
+                  name={food.name}
+                  price={food.price}
+                  imageURL={food.imageURL}
+                />
               </Link>
             ))}
           </div>

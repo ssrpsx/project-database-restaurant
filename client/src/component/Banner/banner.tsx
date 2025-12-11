@@ -21,7 +21,7 @@ const SingleImage: React.FC = () => {
     useEffect(() => {
         const load = async () => {
             try {
-                const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/settings/get");
+                const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/settings/get_restaurant_info");
                 const json = await res.json();
                 setData(json);
             }
@@ -34,7 +34,7 @@ const SingleImage: React.FC = () => {
     }, [])
 
     return (
-        <div className="container mx-auto mt-15 md:mt-24">
+        <div className="container mx-auto mt-15 mb-4     md:mt-24">
             <img
                 src={data ? data.LOGO_URL : "/banner.png"}
                 alt="Delicious Food Banner"
