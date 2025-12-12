@@ -43,7 +43,7 @@ async function createDatabase() {
                     NAME VARCHAR(100) NOT NULL,
                     DESCRIPTION TEXT,
                     PRICE INT NOT NULL,
-                    IMAGE_URL VARCHAR(255) DEFAULT 'image.png',
+                    IMAGE_URL VARCHAR(255) DEFAULT '/image.png',
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                     FOREIGN KEY (CATEGORY_ID) REFERENCES category(ID)
