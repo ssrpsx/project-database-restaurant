@@ -66,7 +66,7 @@ const App: React.FC = () => {
         />
 
         <Route
-          path="/login"
+          path="/:table_number/login/"
           element={
             <>
               <Navbar />

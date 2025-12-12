@@ -84,12 +84,12 @@ const KitchenPage: React.FC = () => {
     if (loading) return <div className="p-10 text-center text-2xl font-bold animate-pulse text-white">Loading Orders...</div>;
 
     return (
-        <div className="min-h-screen pt-20 bg-gray-900 p-6">
+        <div className="min-h-screen pt-20 bg-white p-6">
             <header className="flex justify-between items-center mb-8 text-white">
-                    <span className="text-sm font-normal bg-gray-700 px-3 py-1 rounded-full">
+                    <span className="text-sm font-normal bg-gray-700 mt-3 md:mt-6 px-3 py-1 rounded-full">
                         {orders.length} ออเดอร์
                     </span>
-                <div className="text-sm text-gray-400 animate-pulse">● Live Updating</div>
+                <div className="text-sm text-gray-400 md:mt-8 animate-pulse">● Live Updating</div>
             </header>
 
             {orders.length === 0 ? (

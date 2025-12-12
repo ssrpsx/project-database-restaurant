@@ -18,7 +18,7 @@ const SearchBar: React.FC = () => {
             <input
                 type="text"
                 placeholder="ค้นหารายการอาหาร"
-                className="border-2 border-[#181818] rounded text-gray-800 px-3 py-2 w-full"
+                className="border-2 border-gray-800 rounded text-gray-800 px-3 py-2 w-full"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}

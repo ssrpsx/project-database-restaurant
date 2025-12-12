@@ -98,7 +98,7 @@ const FoodGrid: React.FC = () => {
       <div className="flex overflow-x-auto gap-4 mb-6 px-2 scrollbar-none">
         <Link to={`/${table_number}/order`}>
           <button
-            className="bg-[#181818] w-[150px] text-white px-4 py-2 rounded hover:bg-orange-600 shrink-0 "
+            className="bg-gray-800 w-[150px] text-white px-4 py-2 rounded hover:bg-orange-600 shrink-0 "
           >
             ออเดอร์ที่ฉันสั่ง
           </button>
@@ -106,7 +106,7 @@ const FoodGrid: React.FC = () => {
         {foodByCategory.map((cat, idx) => (
           <button
             key={idx}
-            className="bg-[#181818] text-white px-4 py-2 rounded hover:bg-orange-600 text-nowrap"
+            className="bg-gray-200 text-gray-800 shadow-2xl px-4 py-2 rounded hover:bg-orange-600 text-nowrap"
             onClick={() => scrollToCategory(idx)}
           >
             {cat.category}

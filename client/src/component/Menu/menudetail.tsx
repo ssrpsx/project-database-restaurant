@@ -103,14 +103,14 @@ const MenuDetail: React.FC = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2 w-[200px]">
             <button
-              className="bg-gray-300 text-gray-800 px-3 py-1 w-10 h-10 rounded hover:bg-red-600"
+              className="bg-gray-200 text-gray-800 px-3 py-1 w-10 h-10 rounded hover:bg-red-600"
               onClick={handleDecrease}
             >
               -
             </button>
             <span className="w-11 text-center text-gray-800 text-lg">{quantity}</span>
             <button
-              className="bg-gray-300 text-gray-800 px-3 py-1 w-10 h-10 rounded hover:bg-red-600"
+              className="bg-gray-200 text-gray-800 px-3 py-1 w-10 h-10 rounded hover:bg-red-600"
               onClick={handleIncrease}
             >
               +
@@ -123,13 +123,13 @@ const MenuDetail: React.FC = () => {
         <div className="flex justify-between items-center mt-2">
           <a
             href={`/${table_number}/`}
-            className="bg-gray-400 w-[140px] text-center px-4 py-2 rounded hover:bg-gray-400 text-white"
+            className="bg-gray-200 w-[140px] text-center px-4 py-2 rounded hover:bg-gray-400 text-gray-800"
           >
             กลับ
           </a>
 
           <button
-            className="bg-red-500 w-[140px] text-white px-4 py-2 rounded hover:bg-red-600"
+            className="bg-gray-800 w-[140px] text-white px-4 py-2 rounded hover:bg-red-600"
             onClick={handleOrder}>
             สั่งอาหาร
           </button>

@@ -47,14 +47,14 @@ const OrderList: React.FC = () => {
   if (loading) return <div className="p-10 text-center">กำลังโหลดรายการอาหาร...</div>;
 
   return (
-    <div className="p-4 container mx-auto flex flex-col mt-14 gap-4 lg:w-xl sm:mt-4 pb-20 min-h-screen">
+    <div className="p-4 container mx-auto flex flex-col mt-14 gap-4 lg:w-xl sm:mt-16 pb-20 min-h-screen">
 
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-xl font-bold">รายการที่สั่ง</h1>
           <span className="text-sm text-gray-500 font-semibold">โต๊ะ {table_number}</span>
         </div>
-        <Link to={`/${table_number}/`} className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 text-gray-800">
+        <Link to={`/${table_number}/`} className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-400 text-gray-800">
           กลับ
         </Link>
       </div>
@@ -129,7 +129,7 @@ const OrderList: React.FC = () => {
 
           <Link
             to={`/${table_number}/`}
-            className="w-full text-center bg-red-500 text-white px-4 py-3 rounded hover:bg-red-600 font-bold shadow-lg"
+            className="w-full text-center bg-gray-800 text-white px-4 py-3 rounded hover:bg-red-600 font-bold shadow-lg"
           >
             ปิด / ชำระเงิน
           </Link>
