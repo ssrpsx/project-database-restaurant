@@ -4,23 +4,17 @@ select * from restaurant_info WHERE id = 1;
 
 UPDATE restaurant_info SET LOGO_URL = '/banner.png' WHERE id = 1;
 
-INSERT INTO category (NAME) VALUES("ต้มยำ");
-
-select * from category WHERE NAME = 'ต้มยำ';
-
-select * from category;
-
 DELETE FROM category WHERE id = 2;
 
 UPDATE category SET Name = "123" WHERE ID = 19;
 
 INSERT INTO restaurant_info(NAME, DESCRIPTION, LOGO_URL) VALUES("My Restaurant11","TEXT","banner.png");
 
+select * from category;
+
 select * from menu_item;
 
 select * from orders;
-
-SELECT * FROM menu_item WHERE NAME LIKE '%ผัด%';
 
 SELECT * FROM order_items;
 
