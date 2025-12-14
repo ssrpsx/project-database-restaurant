@@ -17,6 +17,7 @@ interface dataMenuItem extends RowDataPacket {
     IMAGE_URL: string;
 }
 
+// <
 export const post_restaurant_info = async (req: Request, res: Response) => {
     try {
         const { storeTitle, storeDescription } = req.body;
@@ -55,7 +56,7 @@ export const post_restaurant_info = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "No data to update" });
         }
 
-        values.push(1);
+        values.push(1); // ID
 
         const sql = `UPDATE restaurant_info SET ${fields.join(", ")} WHERE ID = ?`;
 
@@ -70,6 +71,7 @@ export const post_restaurant_info = async (req: Request, res: Response) => {
     }
 };
 
+// <
 export const post_category = async (req: Request, res: Response) => {
     const { name } = req.body;
 
@@ -88,6 +90,7 @@ export const post_category = async (req: Request, res: Response) => {
     return res.status(200).json({ message: "Added successfully" })
 };
 
+// <
 export const post_menu = async (req: Request, res: Response) => {
     const { category_id, name, price, desc } = req.body;
 
@@ -106,6 +109,7 @@ export const post_menu = async (req: Request, res: Response) => {
     return res.status(200).json({ message: "Added successfully" })
 };
 
+// <
 export const post_table_number = async (req: Request, res: Response) => {
     const { table_number } = req.body;
 
@@ -124,6 +128,7 @@ export const post_table_number = async (req: Request, res: Response) => {
     return res.status(200).json({ message: "Added successfully" })
 };
 
+// <
 export const post_order = async (req: Request, res: Response) => {
     try {
         const { table_number, quantity, price } = req.body;

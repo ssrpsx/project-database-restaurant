@@ -17,6 +17,7 @@ interface dataMenuItem extends RowDataPacket {
     IMAGE_URL: string;
 }
 
+// <
 export const get_restaurant_info = async (req: Request, res: Response) => {
     try {
         const [rows] = await db.query<dataRestaurantInfo[]>(
@@ -37,6 +38,7 @@ export const get_restaurant_info = async (req: Request, res: Response) => {
     }
 };
 
+// <
 export const get_category = async (req: Request, res: Response) => {
     try {
         const [rows] = await db.query<dataMenuItem[]>(
@@ -57,6 +59,7 @@ export const get_category = async (req: Request, res: Response) => {
     }
 };
 
+// <
 export const get_menus = async (req: Request, res: Response) => {
     try {
         const [rows] = await db.query<dataMenuItem[]>(
@@ -77,6 +80,7 @@ export const get_menus = async (req: Request, res: Response) => {
     }
 };
 
+// <
 export const get_menus_detail = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
@@ -99,6 +103,7 @@ export const get_menus_detail = async (req: Request, res: Response) => {
     }
 };
 
+// <
 export const get_table_number = async (req: Request, res: Response) => {
     try {
         const [rows] = await db.query<dataMenuItem[]>(
@@ -119,6 +124,7 @@ export const get_table_number = async (req: Request, res: Response) => {
     }
 };
 
+// <
 export const get_search = async (req: Request, res: Response) => {
     try {
         const keyword = req.query.keyword as string;
@@ -140,6 +146,8 @@ export const get_search = async (req: Request, res: Response) => {
     }
 };
 
+
+// <
 export const get_kitchen_orders = async (req: Request, res: Response) => {
     try {
         const sql = `
@@ -195,6 +203,8 @@ export const get_kitchen_orders = async (req: Request, res: Response) => {
     }
 };
 
+
+// <
 export const get_orders_by_table = async (req: Request, res: Response) => {
     try {
         const { table_number } = req.params;
@@ -258,6 +268,7 @@ export const get_orders_by_table = async (req: Request, res: Response) => {
     }
 };
 
+//<
 export const get_yearly_revenue = async (req: Request, res: Response) => {
     try {
         const currentYear = req.query.year || new Date().getFullYear();

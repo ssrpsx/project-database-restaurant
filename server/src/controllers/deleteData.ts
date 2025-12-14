@@ -9,6 +9,7 @@ interface data extends RowDataPacket {
     LOGO_URL: string;
 }
 
+// <
 export const delete_category = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
@@ -33,6 +34,7 @@ export const delete_category = async (req: Request, res: Response) => {
     }
 };
 
+// <
 export const delete_menu = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;

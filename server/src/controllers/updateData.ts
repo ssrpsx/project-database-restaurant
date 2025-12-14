@@ -10,6 +10,7 @@ interface dataMenuItem extends RowDataPacket {
     IMAGE_URL: string;
 }
 
+// <
 export const update_category = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
@@ -35,6 +36,7 @@ export const update_category = async (req: Request, res: Response) => {
     }
 };
 
+// <
 export const update_menu = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
@@ -74,7 +76,6 @@ export const update_menu = async (req: Request, res: Response) => {
             values.push(imagePath);
         }
 
-        // 4. ถ้าไม่มีอะไรส่งมาให้อัปเดตเลย
         if (fields.length === 0) {
             return res.status(400).json({ message: "No data to update" });
         }
@@ -95,6 +96,7 @@ export const update_menu = async (req: Request, res: Response) => {
     }
 };
 
+// <
 export const update_order_status = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
