@@ -10,6 +10,8 @@ UPDATE category SET Name = "123" WHERE ID = 19;
 
 INSERT INTO restaurant_info(NAME, DESCRIPTION, LOGO_URL) VALUES("My Restaurant11","TEXT","banner.png");
 
+select * from restaurant_info;
+
 select * from category;
 
 select * from menu_item;
