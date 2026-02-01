@@ -4,7 +4,7 @@ select * from restaurant_info WHERE id = 1;
 
 UPDATE restaurant_info SET LOGO_URL = '/banner.png' WHERE id = 1;
 
-DELETE FROM category WHERE id = 2;
+DELETE FROM category;
 
 UPDATE category SET Name = "123" WHERE ID = 19;
 
@@ -25,6 +25,8 @@ SELECT * FROM menu_item;
 SELECT * FROM orders;
 
 SELECT * FROM table_info;
+
+select * from menu_item where NAME = "น้ำแข็งเปล่า";
 
 DELETE FROM menu_item WHERE id = 2;
 

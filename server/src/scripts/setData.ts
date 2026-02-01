@@ -1,6 +1,5 @@
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
-import bcrypt from "bcryptjs";
 
 dotenv.config();
 
@@ -105,7 +104,7 @@ async function createDatabase() {
         console.log("✔ INSERT MENU ITEM SUCCESS");
 
         const tables = [
-            ['A1'], ['A2'], ['A3'], ['A4'], ['A5']
+            ['undefined'], ['A1'], ['A2'], ['A3'], ['A4'], ['A5']
         ];
 
         await connection.query(

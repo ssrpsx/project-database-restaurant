@@ -104,7 +104,7 @@ async function createDatabase() {
 
         await connection.query(
             "INSERT INTO restaurant_info(NAME, DESCRIPTION, LOGO_URL) VALUES(?, ?, ?)",
-            ["My Restaurant", "TEXT", "/banner.png"]
+            ["Food UP", "TEXT Self-service water.", "/background.png"]
         )
 
         console.log("✔ Default NAME, DESCRIPTION, LOGO_URL.");
