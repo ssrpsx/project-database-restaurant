@@ -22,7 +22,7 @@ Admin Feature
 
 -- screenshot --
 
-Stack using\n
-Front-end: React (TypScript), Vite, TailwindCSS\n
-Back-end: Node.js (TypeScript)\n
-Database: MySQL\n
+Stack using
+Front-end: React (TypScript), Vite, TailwindCSS
+Back-end: Node.js (TypeScript)
+Database: MySQL
