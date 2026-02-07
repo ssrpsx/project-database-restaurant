@@ -7,12 +7,12 @@ From this problem, I developed *FOOD UP* a restaurant website system designed to
 
 Restaurant owners can customize their restaurant name, banner and description with full flexibility, while customer can easily search and place orders conveniently.
 
-User Feature
+## User Feature
 - Scan QR code to place order
 - Check status and table total
 - Search for menu items
 
-Admin Feature
+## Admin Feature
 - Customize restaurant name and banner
 - Crete / Delete / Edit announcement
 - Crete / Delete / Edit menu category
@@ -20,9 +20,10 @@ Admin Feature
 - receive order and update order status
 - view monthly summary graphs
 
+## PC Showcase (Responsive Supported)
 <img src="screenshot/screenshot.gif" alt="Desktop Portfolio">
 
-Stack using
+## 🛠️ Tech Stack
 - Front-end: React (TypScript), Vite, TailwindCSS
 - Back-end: Node.js (TypeScript)
 - Database: MySQL
