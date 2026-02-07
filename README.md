@@ -58,11 +58,11 @@ docker compose up --build
 http://localhost:5500/
 ```
 
-### Username of admin
+### Username of admin on website
 ```
 admin
 ```
-### Password of admin
+### Password of admin on website
 ```
 password
 ```
