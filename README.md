@@ -20,7 +20,7 @@ Admin Feature
 - receive order and update order status
 - view monthly summary graphs
 
--- screenshot --
+<img src="screenshot/screenshot.gif" alt="Desktop Portfolio">
 
 Stack using
 - Front-end: React (TypScript), Vite, TailwindCSS
