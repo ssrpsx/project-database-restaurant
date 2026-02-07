@@ -27,3 +27,35 @@ Restaurant owners can customize their restaurant name, banner and description wi
 - Front-end: React (TypScript), Vite, TailwindCSS
 - Back-end: Node.js (TypeScript)
 - Database: MySQL
+
+### 1. Open Docker Desktop
+```
+Make sure Docker Desktop is running on your machine.
+```
+
+### 2. Git clone this repo
+```bash
+git clone https://github.com/ssrpsx/project-database-restaurant.git
+```
+
+### 3. Move to the project directory
+```bash
+cd project-database-restaurant
+```
+
+### 4. Build docker compose
+```bash
+docker compose up --build
+```
+
+### 5. Waiting utill to see this
+```
+🚀 Server running on port 3000
+```
+
+### 6. Open the website in your browser
+```bash
+http://localhost:5500/
+```
+
+---
